@@ -56,10 +56,10 @@ ENVIRONMENT=development
 
 ```bash
 # Build and start the containers
-docker-compose up --build
+docker compose up --build
 
 # Or run in detached mode
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 The application will be available at:
@@ -70,7 +70,7 @@ The application will be available at:
 #### Step 4: Stop the Application
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ### Option 2: Local Development Setup
@@ -251,31 +251,31 @@ Access MLflow UI at:
 ### Build the Image
 
 ```bash
-docker-compose build
+docker compose build
 ```
 
 ### Start Services
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ### View Logs
 
 ```bash
-docker-compose logs -f
+docker compose logs -f
 ```
 
 ### Stop Services
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ### Rebuild After Changes
 
 ```bash
-docker-compose up --build -d
+docker compose up --build -d
 ```
 
 ## 🚀 Production Deployment
@@ -291,7 +291,7 @@ ENVIRONMENT=production
 2. Build and run:
 
 ```bash
-docker-compose up --build -d
+docker compose up --build -d
 ```
 
 ### Using Docker
@@ -346,18 +346,18 @@ lsof -i :8000
 
 ```bash
 # Clean up Docker resources
-docker-compose down -v
+docker compose down -v
 docker system prune -a
 
 # Rebuild from scratch
-docker-compose build --no-cache
+docker compose build --no-cache
 ```
 
 ### MLflow Not Starting
 
 - Check if port 5000 (or 5555) is available
 - Verify SQLite database permissions
-- Check Docker logs: `docker-compose logs`
+- Check Docker logs: `docker compose logs`
 
 ## 📝 Dependencies
 
