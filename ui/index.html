@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat or Dog Classifier</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐱 Cat or Dog Classifier 🐶</h1>
+            <p class="subtitle">Upload an image to find out if it's a cat or a dog!</p>
+            <a href="/docs" target="_blank" class="api-doc-link" title="View API Documentation">
+                <svg class="api-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                API Documentation
+            </a>
+        </header>
+
+        <main>
+            <div class="upload-section" id="uploadSection">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <h2>Drop your image here</h2>
+                        <p>or click to browse</p>
+                        <input type="file" id="fileInput" accept="image/*" hidden>
+                        <button class="browse-btn" id="browseBtn">
+                            Choose File
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="preview-section" id="previewSection" style="display: none;">
+                <div class="image-preview">
+                    <img id="previewImage" src="" alt="Preview">
+                    <button class="close-btn" id="closeBtn" onclick="resetUpload()">×</button>
+                </div>
+                <button class="classify-btn" id="classifyBtn" onclick="classifyImage()">
+                    <span class="btn-text">Classify Image</span>
+                    <span class="btn-loader" style="display: none;"></span>
+                </button>
+            </div>
+
+            <div class="result-section" id="resultSection" style="display: none;">
+                <div class="result-card" id="resultCard">
+                    <div class="result-icon" id="resultIcon"></div>
+                    <h2 class="result-title" id="resultTitle"></h2>
+                    <div class="confidence-bar-container">
+                        <div class="confidence-label">
+                            <span>Confidence: <strong id="confidenceValue"></strong></span>
+                        </div>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="confidenceFill"></div>
+                        </div>
+                    </div>
+                    <div class="probabilities">
+                        <div class="prob-item">
+                            <span class="prob-label">🐱 Cat</span>
+                            <span class="prob-value" id="catProb"></span>
+                        </div>
+                        <div class="prob-item">
+                            <span class="prob-label">🐶 Dog</span>
+                            <span class="prob-value" id="dogProb"></span>
+                        </div>
+                    </div>
+                    <button class="try-again-btn" onclick="resetUpload()">Try Another Image</button>
+                </div>
+            </div>
+
+            <div class="error-message" id="errorMessage" style="display: none;"></div>
+        </main>
+
+        <footer class="footer">
+            <p class="footer-text">
+                Model by 
+                <a href="https://www.kaggle.com/models/wafaaelhusseini/cats-vs-dogs-classifier" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="footer-link">
+                    wafaaelhusseini
+                </a>
+                on Kaggle
+            </p>
+            <p class="footer-text">
+                Developed by 
+                <a href="https://borenmon.dev" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="footer-link">
+                    Boren Mon
+                </a>
+                with AI Assistant (Claude)
+            </p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

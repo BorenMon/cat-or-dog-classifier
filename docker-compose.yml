@@ -1,0 +1,26 @@
+name: cod-classifier
+
+services:
+  cod-classifier:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ENVIRONMENT: ${ENVIRONMENT}
+    container_name: cod-classifier
+    ports:
+      # FastAPI Ports
+      - "8888:8000"
+      # MLflow UI Port
+      - "5555:5000"
+    volumes:
+      - .:/app # To support hot reloading
+    env_file:
+      - .env
+    restart: always
+    networks:
+      - cod-classifier-network
+
+networks:
+  cod-classifier-network:
+    driver: bridge
