@@ -50,7 +50,14 @@ Add the following to `.env`:
 
 ```env
 ENVIRONMENT=development
+FASTAPI_PORT=8888
+MLFLOW_UI_PORT=5555
 ```
+
+**Port Configuration**:
+- `FASTAPI_PORT`: External port for FastAPI (default: 8888)
+- `MLFLOW_UI_PORT`: External port for MLflow UI (default: 5555)
+- Internal ports (8000 for FastAPI, 5000 for MLflow) remain fixed
 
 #### Step 3: Build and Run with Docker Compose
 
@@ -63,9 +70,11 @@ docker compose up -d --build
 ```
 
 The application will be available at:
-- **Web UI**: http://localhost:8888
-- **API Docs**: http://localhost:8888/docs
-- **MLflow UI**: http://localhost:5555
+- **Web UI**: http://localhost:${FASTAPI_PORT} (default: 8888)
+- **API Docs**: http://localhost:${FASTAPI_PORT}/docs (default: 8888)
+- **MLflow UI**: http://localhost:${MLFLOW_UI_PORT} (default: 5555)
+
+**Note**: Ports are configurable via environment variables in `.env`. If you change `FASTAPI_PORT` or `MLFLOW_UI_PORT`, use those values instead.
 
 #### Step 4: Stop the Application
 
@@ -156,8 +165,18 @@ Create a `.env` file in the root directory with the following variables:
 # Environment: development or production
 ENVIRONMENT=development
 
+# Port Configuration (for Docker Compose)
+FASTAPI_PORT=8888      # External port for FastAPI web server
+MLFLOW_UI_PORT=5555   # External port for MLflow UI
+
 # Optional: Add other configuration variables as needed
 ```
+
+**Port Configuration Notes**:
+- `FASTAPI_PORT`: Maps to internal port 8000 (default: 8888)
+- `MLFLOW_UI_PORT`: Maps to internal port 5000 (default: 5555)
+- These ports are only used when running with Docker Compose
+- For local development, use the default ports (8000 for FastAPI, 5000 for MLflow)
 
 ### Model Configuration
 
@@ -170,7 +189,9 @@ The model file `cats_dogs_finetuned_FT.keras` should be placed in the root direc
 
 ### Web Interface
 
-1. Open your browser and navigate to the web UI (http://localhost:8888 or http://localhost:8000)
+1. Open your browser and navigate to the web UI:
+   - **Docker**: http://localhost:${FASTAPI_PORT} (default: 8888)
+   - **Local**: http://localhost:8000
 2. Click "Choose File" or drag and drop an image
 3. Click "Classify Image" to get the prediction
 4. View the results with confidence scores and probabilities
@@ -244,7 +265,9 @@ All predictions are automatically logged to MLflow with:
 
 Access MLflow UI at:
 - **Development**: http://localhost:5000
-- **Docker**: http://localhost:5555
+- **Docker**: http://localhost:${MLFLOW_UI_PORT} (default: 5555)
+
+**Note**: The MLflow port in Docker is configurable via the `MLFLOW_UI_PORT` environment variable in your `.env` file.
 
 ## 🐳 Docker Commands
 
@@ -278,14 +301,18 @@ docker compose down
 docker compose up --build -d
 ```
 
+**Note**: The docker-compose.yml uses environment variables for port configuration. Make sure your `.env` file includes `FASTAPI_PORT` and `MLFLOW_UI_PORT` if you want to customize the ports.
+
 ## 🚀 Production Deployment
 
 ### Using Docker Compose
 
-1. Set environment to production:
+1. Set environment to production in `.env`:
 
 ```env
 ENVIRONMENT=production
+FASTAPI_PORT=8888
+MLFLOW_UI_PORT=5555
 ```
 
 2. Build and run:
@@ -293,6 +320,8 @@ ENVIRONMENT=production
 ```bash
 docker compose up --build -d
 ```
+
+**Note**: Ports are configurable via the `FASTAPI_PORT` and `MLFLOW_UI_PORT` environment variables in your `.env` file.
 
 ### Using Docker
 
@@ -336,10 +365,11 @@ curl -X POST "http://localhost:8000/api" \
 ### Port Already in Use
 
 ```bash
-# Find process using port 8000
-lsof -i :8000
+# Find process using a specific port (e.g., 8888)
+lsof -i :8888
 
-# Kill the process or change port in docker-compose.yml
+# Kill the process or change port in .env file
+# Update FASTAPI_PORT or MLFLOW_UI_PORT in .env and restart
 ```
 
 ### Docker Issues
@@ -355,9 +385,10 @@ docker compose build --no-cache
 
 ### MLflow Not Starting
 
-- Check if port 5000 (or 5555) is available
+- Check if the port specified in `MLFLOW_UI_PORT` (default: 5555) is available
 - Verify SQLite database permissions
 - Check Docker logs: `docker compose logs`
+- Ensure `.env` file has `MLFLOW_UI_PORT` configured
 
 ## 📝 Dependencies
 

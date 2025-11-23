@@ -5,14 +5,12 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-      args:
-        ENVIRONMENT: ${ENVIRONMENT}
     container_name: cod-classifier
     ports:
       # FastAPI Ports
-      - "8888:8000"
+      - "${FASTAPI_PORT}:8000"
       # MLflow UI Port
-      - "5555:5000"
+      - "${MLFLOW_UI_PORT}:5000"
     volumes:
       - .:/app # To support hot reloading
     env_file:

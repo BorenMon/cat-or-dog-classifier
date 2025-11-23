@@ -1,5 +1,3 @@
-ARG ENVIRONMENT=development # default environment
-
 FROM python:3.13.5
 
 WORKDIR /app
